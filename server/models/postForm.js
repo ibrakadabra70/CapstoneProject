@@ -7,6 +7,7 @@ const postSchema = mongoose.Schema({
     gasHeating: Number,
     squareFootagePerHome: Number,
     numberOfEV: Number,
+    transformerSize: Number
 
 });
 
