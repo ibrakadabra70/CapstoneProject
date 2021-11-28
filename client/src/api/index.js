@@ -7,6 +7,7 @@ const API = axios.create({ baseURL: 'http://localhost:5000' });
 
 export const fetchForms = () => API.get('/posts');
 export const sendForm = (newForm) => API.post('/posts', newForm);
+export const deletePost = (id) => API.delete(`/posts/${id}`);
 
 export const signin = (signFormData) => API.post('/users/signin', signFormData);
 export const signup = (signFormData) => API.post('/users/signUp', signFormData);

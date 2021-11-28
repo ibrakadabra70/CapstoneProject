@@ -43,16 +43,8 @@ export default function ButtonAppBar() {
 
   return (
     <Box sx={{ flexGrow: 1 }}>
-      <AppBar position="static">
+      <AppBar position="static" className={classes.appBar} >
         <Toolbar>
-          <IconButton
-            size="large"
-            edge="start"
-            color="inherit"
-            aria-label="menu"
-            sx={{ mr: 2 }}
-          >
-          </IconButton>
           <Typography align="center" variant="h5" component="div" sx={{ flexGrow: 1 }}>
             Calculate Transformer Size
           </Typography>

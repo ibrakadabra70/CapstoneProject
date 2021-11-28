@@ -9,8 +9,6 @@ import {sendForm, getForms} from '../../actions/posts';
 import Form from '../Form/Form';
 import Projects from '../Projects/Projects';
 
-import useStyles from './styles';
-
 import ButtonAppBar from '../Navbar/Navbar';
 
 
@@ -30,11 +28,11 @@ const Home = () =>{
       <Container maxWidth="lg">
       <Grow in>
         <Container>
-          <Grid container justify="space-between" alignItems="stretch" spacing={3}>
-          <Grid item xs={12} sm={7}>
-            <Projects />
-          </Grid>
-            <Grid item xs={12} sm={4}>
+          <Grid container justify="center" spacing={1}>
+            <Grid item xs={12} sm={7}>
+              <Projects />
+            </Grid>
+            <Grid item xs={12} sm={5}>
               <Form />
             </Grid>
           </Grid>

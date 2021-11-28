@@ -19,11 +19,12 @@ import ButtonAppBar from './components/Navbar/Navbar';
 const App = () => (
   <Router>
     <Container maxWidth="lg">
-      <ButtonAppBar />
+      <Grid item xs={12} sm={14}>
+        <ButtonAppBar />
+      </Grid>
       <Switch>
         <Route path="/" exact component={LoginForm} />
         <Route path="/home" exact component={Home} />
-        
       </Switch>
     </Container>
   </Router>

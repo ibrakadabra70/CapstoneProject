@@ -13,8 +13,16 @@ export default makeStyles((theme) => ({
     display: 'flex',
     flexWrap: 'wrap',
     justifyContent: 'center',
+    
   },
   buttonSubmit: {
     marginBottom: 10,
+    color: "#ffffff",
+    backgroundColor: theme.palette.secondary.dark
   },
+  buttonClear: {
+    marginBottom: 10,
+    color: "#ffffff",
+    
+  }
 }));

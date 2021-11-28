@@ -4,6 +4,8 @@ const reducers = (forms = [], action) => {
             return action.payload;
         case 'CREATE':
             return [...forms, action.payload];
+        case 'DELETE':
+            return forms.filter((project) => project._id !== action.payload);
         default:
             return forms;
     }

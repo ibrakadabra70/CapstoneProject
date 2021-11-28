@@ -23,7 +23,8 @@ const Form = () => {
         gasHeating: '',
         squareFootagePerHome: '',
         numberOfEV: '',
-        transformerSize: ''
+        transformerSize: '',
+        transformerCost:''
     });
 
     const user = JSON.parse(localStorage.getItem('profile'));
@@ -59,12 +60,13 @@ const Form = () => {
         let sum = 0;
         
         let index = 0;
+        let transformerCost = 0;
 
         let projectTransformerSize = 0;
 
-        function calculateTransformerSize(transformerSize)
+        function calculateTransformerCost(transformerSize)
         {
-            let transformerCost = 0;
+            
             switch (transformerSize) {
                 case 10:
                     transformerCost = 1056;
@@ -143,7 +145,7 @@ const Form = () => {
                     projectTransformerSize = transformerSizeWinter[indexElectric]; 
                     console.log(indexElectric);
                     console.log(projectTransformerSize);
-                    console.log(calculateTransformerSize(projectTransformerSize));
+                    console.log(calculateTransformerCost(projectTransformerSize));
                 } else if (1200 <= parseInt(formData.squareFootagePerHome) && parseInt(formData.squareFootagePerHome) < 1500) {
                     electricWinter = parseInt(formData.electricHeating) * 18;
                     zElectric = parseInt(electricWinter) * diversityFactor[parseInt(formData.electricHeating) - 1];
@@ -153,7 +155,7 @@ const Form = () => {
                     projectTransformerSize = transformerSizeWinter[indexElectric];
                     console.log(indexElectric);
                     console.log(projectTransformerSize);
-                    console.log(calculateTransformerSize(projectTransformerSize));
+                    console.log(calculateTransformerCost(projectTransformerSize));
                 } else if (1500 <= parseInt(formData.squareFootagePerHome) && parseInt(formData.squareFootagePerHome) < 1800) {
                     electricWinter = parseInt(formData.electricHeating) * 20;
                     zElectric = parseInt(electricWinter) * diversityFactor[parseInt(formData.electricHeating) - 1];
@@ -164,7 +166,7 @@ const Form = () => {
                     console.log(electricWinter);
                     console.log(indexElectric);
                     console.log(projectTransformerSize);
-                    console.log(calculateTransformerSize(projectTransformerSize));
+                    console.log(calculateTransformerCost(projectTransformerSize));
                 } else if (1800 <= parseInt(formData.squareFootagePerHome) && parseInt(formData.squareFootagePerHome) < 2400) {
                     electricWinter = parseInt(formData.electricHeating) * 21;
                     zElectric = parseInt(electricWinter) * diversityFactor[parseInt(formData.electricHeating) - 1];
@@ -174,7 +176,7 @@ const Form = () => {
                     projectTransformerSize = transformerSizeWinter[indexElectric];
                     console.log(indexElectric);
                     console.log("transformer Size:" + projectTransformerSize);
-                    console.log(calculateTransformerSize(projectTransformerSize));
+                    console.log(calculateTransformerCost(projectTransformerSize));
                 } else if (2400 <= parseInt(formData.squareFootagePerHome) && parseInt(formData.squareFootagePerHome) < 3000) {
                     electricWinter = parseInt(formData.electricHeating) * 26;
                     zElectric = parseInt(electricWinter) * diversityFactor[parseInt(formData.electricHeating) - 1];
@@ -184,7 +186,7 @@ const Form = () => {
                     projectTransformerSize = transformerSizeWinter[indexElectric];
                     console.log(indexElectric);
                     console.log("transformer Size:" + projectTransformerSize);
-                    console.log(calculateTransformerSize(projectTransformerSize));
+                    console.log(calculateTransformerCost(projectTransformerSize));
                 }
                 else{
                     console.log("square footage out of range")
@@ -201,7 +203,7 @@ const Form = () => {
                     projectTransformerSize = transformerSizeWinter[indexGas];
                     console.log(indexGas);
                     console.log(projectTransformerSize);
-                    console.log(calculateTransformerSize(projectTransformerSize));
+                    console.log(calculateTransformerCost(projectTransformerSize));
                 } else if (1200 <= parseInt(formData.squareFootagePerHome) && parseInt(formData.squareFootagePerHome) < 1500) {
                     gasWinter = parseInt(formData.gasHeating) * 10;
                     zGas = parseInt(gasWinter) * diversityFactor[parseInt(formData.gasHeating) - 1];
@@ -211,7 +213,7 @@ const Form = () => {
                     projectTransformerSize = transformerSizeWinter[indexGas];
                     console.log(indexGas);
                     console.log(projectTransformerSize);
-                    console.log(calculateTransformerSize(projectTransformerSize));
+                    console.log(calculateTransformerCost(projectTransformerSize));
                 } else if (1500 <= parseInt(formData.squareFootagePerHome) && parseInt(formData.squareFootagePerHome) < 1800) {
                     gasWinter = parseInt(formData.gasHeating) * 11;
                     zGas = parseInt(gasWinter) * diversityFactor[parseInt(formData.gasHeating) - 1];
@@ -222,7 +224,7 @@ const Form = () => {
                     console.log(gasWinter);
                     console.log(indexGas);
                     console.log(projectTransformerSize);
-                    console.log(calculateTransformerSize(projectTransformerSize));
+                    console.log(calculateTransformerCost(projectTransformerSize));
                 } else if (1800 <= parseInt(formData.squareFootagePerHome) && parseInt(formData.squareFootagePerHome) < 2400) {
                     gasWinter = parseInt(formData.gasHeating) * 12;
                     zGas = parseInt(gasWinter) * diversityFactor[parseInt(formData.gasHeating) - 1];
@@ -232,7 +234,7 @@ const Form = () => {
                     projectTransformerSize = transformerSizeWinter[indexGas];
                     console.log(indexGas);
                     console.log("transformer Size:" + projectTransformerSize);
-                    console.log(calculateTransformerSize(projectTransformerSize));
+                    console.log(calculateTransformerCost(projectTransformerSize));
                 } else if (2400 <= parseInt(formData.squareFootagePerHome) && parseInt(formData.squareFootagePerHome) < 3000) {
                     gasWinter = parseInt(formData.gasHeating) * 14;
                     zGas = parseInt(gasWinter) * diversityFactor[parseInt(formData.gasHeating) - 1];
@@ -242,7 +244,7 @@ const Form = () => {
                     projectTransformerSize = transformerSizeWinter[indexGas];
                     console.log(indexGas);
                     console.log("transformer Size:" + projectTransformerSize);
-                    console.log(calculateTransformerSize(projectTransformerSize));
+                    console.log(calculateTransformerCost(projectTransformerSize));
                 }
                 else{
                     console.log("square footage out of range")
@@ -265,7 +267,7 @@ const Form = () => {
                     console.log(index);
                     console.log(sum);
                     console.log(projectTransformerSize);
-                    console.log(calculateTransformerSize(projectTransformerSize));
+                    console.log(calculateTransformerCost(projectTransformerSize));
                 } else if (1200 <= parseInt(formData.squareFootagePerHome) && parseInt(formData.squareFootagePerHome) < 1500) {
                     gasWinter = parseInt(formData.gasHeating) * 10;
                     electricWinter = parseInt(formData.electricHeating) * 18;
@@ -282,7 +284,7 @@ const Form = () => {
                     console.log(index);
                     console.log(sum);
                     console.log(projectTransformerSize);
-                    console.log(calculateTransformerSize(projectTransformerSize));
+                    console.log(calculateTransformerCost(projectTransformerSize));
                 } else if (1500 <= parseInt(formData.squareFootagePerHome) && parseInt(formData.squareFootagePerHome) < 1800) {
                     gasWinter = parseInt(formData.gasHeating) * 11;
                     electricWinter = parseInt(formData.electricHeating) * 20;
@@ -299,7 +301,7 @@ const Form = () => {
                     console.log(index);
                     console.log(sum);
                     console.log(projectTransformerSize);
-                    console.log(calculateTransformerSize(projectTransformerSize));
+                    console.log(calculateTransformerCost(projectTransformerSize));
                 } else if (1800 <= parseInt(formData.squareFootagePerHome) && parseInt(formData.squareFootagePerHome) < 2400) {
                     gasWinter = parseInt(formData.gasHeating) * 12;
                     electricWinter = parseInt(formData.electricHeating) * 21;
@@ -316,7 +318,7 @@ const Form = () => {
                     console.log(index);
                     console.log(sum);
                     console.log(projectTransformerSize);
-                    console.log(calculateTransformerSize(projectTransformerSize));
+                    console.log(calculateTransformerCost(projectTransformerSize));
                 } else if (2400 <= parseInt(formData.squareFootagePerHome) && parseInt(formData.squareFootagePerHome) < 3000) {
                     gasWinter = parseInt(formData.gasHeating) * 14;
                     electricWinter = parseInt(formData.electricHeating) * 26;
@@ -333,7 +335,7 @@ const Form = () => {
                     console.log(index);
                     console.log(sum);
                     console.log(projectTransformerSize);
-                    console.log(calculateTransformerSize(projectTransformerSize));
+                    console.log(calculateTransformerCost(projectTransformerSize));
                     
                 }
                 else{
@@ -347,6 +349,7 @@ const Form = () => {
        
         
         formData.transformerSize = projectTransformerSize;
+        formData.transformerCost = transformerCost;
        
         
          alert("The Transformer size to be used for this project in KW:" + projectTransformerSize);
@@ -375,6 +378,7 @@ const Form = () => {
     
     return (
         <Paper className={classes.paper}>
+            <Typography>Please Input project Information</Typography>
             <form autoComplete="off" noValidate className={`${classes.root} ${classes.form}`} onSubmit={handleSubmit}>
                 <TextField name ="project name" variant="outlined" label="Project Name" placeholder="Project Name" fullWidth value={formData.projectName} onChange={(e) => setFormData({ ...formData, projectName: e.target.value})} />
                 
@@ -388,7 +392,7 @@ const Form = () => {
                 
                 <TextField name ="Electrical Vehicles" variant="outlined" label="Number of Electrical Vehicles" placeholder="Number of Electrical Vehicles" fullWidth value={formData.numberOfEV} onChange={(e) => setFormData({ ...formData, numberOfEV: e.target.value})} />
                 <Button className={classes.buttonSubmit} variant="contained" color="primary" size="large"  type="submit">Submit</Button>
-                <Button className={classes.buttonSubmit} variant="contained" color="secondary" size="large" onClick={clear}>Clear</Button>
+                <Button className={classes.buttonClear} variant="contained" color="secondary" size="large" onClick={clear}>Clear</Button>
            </form>
         </Paper>
         
