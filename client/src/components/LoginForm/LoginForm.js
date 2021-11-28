@@ -1,31 +1,89 @@
 import React, { useState } from 'react';
 import {Container, AppBar, Typography, Grow, Grid, Toolbar, IconButton, MenuIcon, Paper, TextField, FormControlLabel, Checkbox, Link, Button, Avatar} from '@mui/material';
 import useStyles from './styles';
-//import {BrowserRouter, Switch, Route} from 'react-router-dom';
+import LockOutlinedIcon from '@material-ui/icons/LockOutlined';
+import Input from './input.js';
+import { useDispatch } from 'react-redux';
+import { useHistory } from 'react-router-dom';
+import {signin, signup} from '../../actions/auth';
+
+const initialState = {firstName:'', lastName:'', email:'', password:'', confirmPassword:''};
+
 
 const LoginForm = () => {
+
     const classes = useStyles();
-    const paperStyle={padding :20,height:'70vh',width:280, margin:"20px auto"}
-    const avatarStyle={backgroundColor:'#1bbd7e'}
-    const btnstyle={margin:'8px 0'}
+    const [showPassword,setShowPassword] = useState(false);
+    const [isSignup, setIsSignup] = useState(false);
+    const [signFormData, setSignFormData] = useState(initialState);
+    const dispatch = useDispatch();
+    const history = useHistory();
+
+
+    const handleSubmit = (e) => 
+    {
+        e.preventDefault();
+        if(isSignup)
+        {
+            dispatch(signup(signFormData, history));
+        }
+        else
+        {
+            dispatch(signin(signFormData, history));
+        }
+    }
+    const handleChange = (e) => 
+    {
+        setSignFormData({ ...signFormData, [e.target.name]: e.target.value });
+    }
+    const handleShowPassword = () => setShowPassword((prevShowPassword) => !prevShowPassword);
+    const switchMode = () => {
+        setIsSignup((prevIsSignup) => !prevIsSignup);
+        handleShowPassword(false);
+    }
+
+
+
+
     return(
-      <Grid>
-            <Paper elevation={10} style={paperStyle}>
-                <Grid align='center'>
-                     <Avatar style={avatarStyle}></Avatar>
-                    <h2>Sign In</h2>
+      <Container component="main" maxWidth="xs">
+          <Paper className={classes.paper} elevation={3}>
+              <Avatar className={classes.avatar}>
+                  <LockOutlinedIcon/>
+              </Avatar>
+              <Typography variant="h5">{isSignup ? 'Sign up' : 'Sign In'}</Typography>
+              <form className={classes.form} onSubmit={handleSubmit}>
+                <Grid container spacing={2}>
+                    {
+                        isSignup && (
+                            <>
+                                <Input name="firstName" label="First Name" handleChange={handleChange} autoFocus half />
+                                <Input name="lastName" label="Last Name" handleChange={handleChange} half/>
+                            </>
+                        )
+                    }
+                    <Input name="email" label="Email Address" handleChange={handleChange} type ="email"  />
+                    <Input name="password" label="Password" handleChange={handleChange} type={showPassword ? "text" :"password"} handleShowPassword={handleShowPassword} />
+                    {
+                        isSignup && <Input name="confirmPassword" label="Confirm Password" handleChange={handleChange} type="password" handleShowPassword={handleShowPassword} />
+                        
+                    }
+                    </Grid>
+                    <Button type="submit" fullWidth variant="contained" color="primary" className={classes.submit}>
+                        {isSignup? "Sign Up" : "Sign In"}
+                    </Button>
+                
+                <Grid container justify="flex-end">
+                    <Grid item>
+                        <Button onClick={switchMode}>
+                            {isSignup ? 'Already have an account? Sign in' : "Don't have an account? Sign up"}
+                        </Button>
+                    </Grid>
                 </Grid>
-                <TextField label='Username' placeholder='Enter username' fullWidth required/>
-                <hr/>
-                <TextField label='Password' placeholder='Enter password' type='password' fullWidth required/>
-                <Button type='submit' color='primary' variant="contained" style={btnstyle} fullWidth>Sign in</Button>
-                <Typography > Don't have an account? 
-                     <Link href="#" >
-                        Sign Up 
-                </Link>
-                </Typography>
-            </Paper>
-        </Grid>
+              </form>
+          </Paper>
+
+      </Container>
     );
 };
 

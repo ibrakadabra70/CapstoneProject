@@ -3,6 +3,7 @@ import mongoose from 'mongoose';
 import cors from 'cors';
 
 import postRoutes from './routes/posts.js';
+import userRoutes from './routes/users.js';
 
 const app = express();
 
@@ -11,6 +12,7 @@ app.use(express.urlencoded({ limit: '30mb', extended: true }))
 app.use(cors());
 
 app.use('/posts', postRoutes);
+app.use('/users', userRoutes);
 
 const CONNECTION_URL = "mongodb+srv://Ibrahim_Abdo:Ibrahimabdo70$$@cluster0.elzg6.mongodb.net/test";
 const PORT = process.env.PORT || 5000;

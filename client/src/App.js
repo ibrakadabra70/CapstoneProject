@@ -7,33 +7,26 @@ import {useHistory} from 'react-router-dom';
 
 import {getForms} from './actions/posts';
 import Form from './components/Form/Form';
+import Home from './components/Home/Home';
 import LoginForm from './components/LoginForm/LoginForm';
-import results from './components/Form/results';
+
 import useStyles from './styles';
 
-
-const App = () =>{
-    const classes = useStyles();
-    const history = useHistory();
+import ButtonAppBar from './components/Navbar/Navbar';
 
 
-    return (
-      <Router>
-        <Container>
-        <Grow in>
-         <Container>
-           {/*<LoginForm/>*/}
-           <Form/>
-              <Switch>
-                <Route path="/components/LoginForm/LoginForm" exact component={LoginForm}/>
-                <Route path="/components/Form/Form" exact component={Form}/>
-                <Route path="/components/Form/results" exact component={results}/>
-              </Switch>
-         </Container>
-        </Grow>
-        </Container>
-      </Router>
-    );
-};
+
+const App = () => (
+  <Router>
+    <Container maxWidth="lg">
+      <ButtonAppBar />
+      <Switch>
+        <Route path="/" exact component={LoginForm} />
+        <Route path="/home" exact component={Home} />
+        
+      </Switch>
+    </Container>
+  </Router>
+);
 
 export default App;

@@ -7,11 +7,15 @@ import {useDispatch} from 'react-redux';
 import {useHistory} from 'react-router-dom';
 import {BrowserRouter as Router, Switch, Route} from 'react-router-dom';
 
+
 import {sendForm} from '../../actions/posts';
 
 
 
+
 const Form = () => {
+    
+
     const[formData, setFormData] = useState({
         projectName: '',
         numberOfHomes: '',
@@ -22,6 +26,7 @@ const Form = () => {
         transformerSize: ''
     });
 
+    const user = JSON.parse(localStorage.getItem('profile'));
     const history = useHistory();
     const classes = useStyles();
     const dispatch = useDispatch();
@@ -52,7 +57,7 @@ const Form = () => {
         
 
         let sum = 0;
-        let z =0;
+        
         let index = 0;
 
         let projectTransformerSize = 0;
@@ -114,12 +119,20 @@ const Form = () => {
 
 
 
-        if(parseInt(formData.numberOfHomes) > '20' || parseInt(formData.electricHeating) + parseInt(formData.gasHeating) !== parseInt(formData.numberOfHomes))
+        if(parseInt(formData.numberOfHomes) > '20')
         {
             alert("Maximum number of houses is 20, Please input correct values");
             clear();
+            return;
         }
-        else{
+        else if(parseInt(formData.electricHeating) + parseInt(formData.gasHeating) !== parseInt(formData.numberOfHomes))
+        {
+            alert("Sum of Homes with Electrical Heating and Gas Heating must equal total number of homes");
+            clear();
+            return;
+        }
+        else
+        {
             if (formData.electricHeating !== '0' && (formData.gasHeating === '0' || formData.gasHeating === '') ) {
                 if (parseInt(formData.squareFootagePerHome) < 1200) {
                     electricWinter = parseInt(formData.electricHeating) * 15;
@@ -334,11 +347,16 @@ const Form = () => {
        
         
         formData.transformerSize = projectTransformerSize;
-        alert("The Transformer size to be used for this project in KW: "+ projectTransformerSize);
+       
+        
+         alert("The Transformer size to be used for this project in KW:" + projectTransformerSize);
+        
+        
 
         console.log(formData);
-        dispatch(sendForm(formData));
+        dispatch(sendForm({ ...formData, email: user?.result?.email }));
         clear();
+        
         
       };
 
@@ -353,25 +371,29 @@ const Form = () => {
             numberOfEV:''
         });
     }
+
+    
     return (
-        <Paper>
-            <Typography variant="h6" align="center">Please Enter Project information</Typography>
-            <form autoComplete="off" noValidate className={classes.form} onSubmit={handleSubmit}>
+        <Paper className={classes.paper}>
+            <form autoComplete="off" noValidate className={`${classes.root} ${classes.form}`} onSubmit={handleSubmit}>
                 <TextField name ="project name" variant="outlined" label="Project Name" placeholder="Project Name" fullWidth value={formData.projectName} onChange={(e) => setFormData({ ...formData, projectName: e.target.value})} />
-                <hr/>
+                
                 <TextField name ="Number of homes" variant="outlined" label="Number of Homes" placeholder="Number Of Homes" fullWidth value={formData.numberOfHomes} onChange={(e) => setFormData({ ...formData, numberOfHomes: e.target.value})} />
-                <hr/>
+                
                 <TextField name ="electric heating" variant="outlined" label="Number of Homes with Electric Heating" placeholder="Number Of Homes with Electric Heating" fullWidth value={formData.electricHeating} onChange={(e) => setFormData({ ...formData, electricHeating: e.target.value})} />
-                <hr/>
+                
                 <TextField name ="gas heating" variant="outlined" label="Number of Homes with Gas Heating" placeholder="Number of Homes with Gas Heating " fullWidth value={formData.gasHeating} onChange={(e) => setFormData({ ...formData, gasHeating: e.target.value})} />
-                <hr/>
+                
                 <TextField name ="SF" variant="outlined" label="Enter the Maximum S.F of home" placeholder="Maximum Square Footage" fullWidth value={formData.squareFootagePerHome} onChange={(e) => setFormData({ ...formData, squareFootagePerHome: e.target.value})} />
-                <hr/>
+                
                 <TextField name ="Electrical Vehicles" variant="outlined" label="Number of Electrical Vehicles" placeholder="Number of Electrical Vehicles" fullWidth value={formData.numberOfEV} onChange={(e) => setFormData({ ...formData, numberOfEV: e.target.value})} />
-                <Button variant="contained" color="primary" size="large" type="submit" onClick={() => {history.push("/results");}} >Submit</Button>
-                <Button variant="contained" color="secondary" size="large" onClick={clear}>Clear</Button>
+                <Button className={classes.buttonSubmit} variant="contained" color="primary" size="large"  type="submit">Submit</Button>
+                <Button className={classes.buttonSubmit} variant="contained" color="secondary" size="large" onClick={clear}>Clear</Button>
            </form>
         </Paper>
+        
+        
+
         
     );
 };

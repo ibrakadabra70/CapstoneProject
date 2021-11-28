@@ -3,7 +3,7 @@ import * as api from '../api/index.js';
 export const getForms = () => async(dispatch) => {
     try {
         const {data} = await api.fetchForms();
-        const action = {type: 'FETCH_ALL', payload: [data]};
+        dispatch({ type: 'FETCH_ALL', payload: data });
     } catch (error) {
         console.log(error.message);
     }
@@ -13,7 +13,7 @@ export const getForms = () => async(dispatch) => {
 export const sendForm = (form) => async(dispatch) => {
     try {
         const {data} = await api.sendForm(form);
-        dispatch({type:'UPLOAD_FORM' , payload: data});
+        dispatch({type:'CREATE' , payload: data});
 
     } catch (error) {
         console.log(error.message);
