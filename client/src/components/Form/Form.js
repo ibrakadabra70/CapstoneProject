@@ -6,6 +6,9 @@ import {useSelector} from 'react-redux';
 import {useDispatch} from 'react-redux';
 import {useHistory} from 'react-router-dom';
 import {BrowserRouter as Router, Switch, Route} from 'react-router-dom';
+import { useRadioGroup } from '@mui/material/RadioGroup';
+import { FormControl, FormControlLabel, FormLabel } from '@mui/material';
+import { Radio, RadioGroup } from '@mui/material';
 
 
 import {sendForm} from '../../actions/posts';
@@ -26,6 +29,8 @@ const Form = () => {
         transformerSize: '',
         transformerCost:''
     });
+
+    const [dropdown, setDropdown] = useState("no");
 
     const user = JSON.parse(localStorage.getItem('profile'));
     const history = useHistory();
@@ -55,8 +60,12 @@ const Form = () => {
         let gasWinter = 0;
         let zGas = 0;
         let indexGas = 0
-        
 
+        let transformerSizeArr = [10, 10, 10, 10, 10, 15, 15, 15, 15, 15, 25, 25, 25, 25, 25, 37.5, 37.5, 37.5, 37.5, 37.5, 50, 50, 50, 50, 50, 75, 75, 75, 75, 75, 100, 100, 100, 100, 100, 167, 167, 167, 167, 167];
+        let squareFootageArr = [1200, 1500, 1800, 2400, 3000, 1200, 1500, 1800, 2400, 3000, 1200, 1500, 1800, 2400, 3000, 1200, 1500, 1800, 2400, 3000, 1200, 1500, 1800, 2400, 3000, 1200, 1500, 1800, 2400, 3000, 1200, 1500, 1800, 2400, 3000, 1200, 1500, 1800, 2400, 3000];
+        let numberOfHomesArr = [2, 2, 0, 0, 0, 4, 2, 2, 2, 2, 6, 4, 4, 4, 2, 8, 6, 6, 6, 4, 8, 8, 6, 6, 6, 10, 10, 8, 8, 6, 12, 10, 10, 10, 8, 12, 10, 10, 10, 8];
+        let numberOfHomesArrEV = [2, 0, 0, 0, 0, 2, 2, 2, 2, 2, 4, 4, 4, 4, 2, 6, 6, 4, 4, 4, 8, 6, 6, 6, 4, 10, 8, 8, 8, 6, 10, 10, 8, 8, 6, 10, 10, 8, 8, 8];
+        let transformerSizeCondensed = [10, 15, 25, 37.5, 50, 75, 100, 167]
         let sum = 0;
         
         let index = 0;
@@ -66,6 +75,30 @@ const Form = () => {
 
         function calculateTransformerCost(transformerSize)
         {
+            console.log("old transformerSize = ", transformerSize);
+            if (dropdown === "no")
+            {
+                index = transformerSizeArr.indexOf(parseInt(projectTransformerSize))
+                console.log("dropdown = no");
+                for(var i = 0; i <= transformerSizeArr.length; i++)
+                {
+                    console.log(transformerSizeArr[i])
+                    if(transformerSizeArr[i] === parseInt(projectTransformerSize) && numberOfHomesArr[i]  >= parseInt(formData.numberOfHomes) )
+                    {
+                        transformerSize = transformerSizeArr[i];
+                        break;
+                    }
+                    else if (transformerSizeArr[i] === parseInt(projectTransformerSize) && numberOfHomesArr[i]  < parseInt(formData.numberOfHomes))
+                    {
+                        index = transformerSizeCondensed.indexOf(projectTransformerSize) + 1;
+                        transformerSize = transformerSizeCondensed(index);
+                    }
+                }
+            }
+            else if (dropdown === "yes")
+            {
+                
+            }
             
             switch (transformerSize) {
                 case 10:
@@ -376,6 +409,8 @@ const Form = () => {
     }
 
     
+
+    
     return (
         <Paper className={classes.paper}>
             <Typography>Please Input project Information</Typography>
@@ -391,8 +426,19 @@ const Form = () => {
                 <TextField name ="SF" variant="outlined" label="Enter the Maximum S.F of home" placeholder="Maximum Square Footage" fullWidth value={formData.squareFootagePerHome} onChange={(e) => setFormData({ ...formData, squareFootagePerHome: e.target.value})} />
                 
                 <TextField name ="Electrical Vehicles" variant="outlined" label="Number of Electrical Vehicles" placeholder="Number of Electrical Vehicles" fullWidth value={formData.numberOfEV} onChange={(e) => setFormData({ ...formData, numberOfEV: e.target.value})} />
+                <div>
+                <h6> Electric Vehicles enabled: {dropdown}</h6>
+                <select value={dropdown} onChange={(e) => setDropdown(e.target.value)}>
+                    <option value = "no">No </option>
+                    <option value = "yes">Yes </option>
+                </select>
+                </div>
+                
+                <div>
                 <Button className={classes.buttonSubmit} variant="contained" color="primary" size="large"  type="submit">Submit</Button>
-                <Button className={classes.buttonClear} variant="contained" color="secondary" size="large" onClick={clear}>Clear</Button>
+                <Button className={classes.buttonClear} variant="contained" color="secondary" size="large"  onClick={clear}>Clear</Button>
+                </div>
+                
            </form>
         </Paper>
         

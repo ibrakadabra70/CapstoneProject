@@ -46,7 +46,7 @@ export default function ButtonAppBar() {
       <AppBar position="static" className={classes.appBar} >
         <Toolbar>
           <Typography align="center" variant="h5" component="div" sx={{ flexGrow: 1 }}>
-            Calculate Transformer Size
+            Transformer Sizing Tool
           </Typography>
           {user?.result ? (
           <Button variant="contained" className={classes.logout} color="secondary" onClick={logout}>Logout</Button>

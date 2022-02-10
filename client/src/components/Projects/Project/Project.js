@@ -44,10 +44,10 @@ const Project = ({project}) => {
         Number of electric vehicles: {project.numberOfEV}
       </Card.Text>
       <Card.Text>
-        Required Transformer Size: {project.transformerSize}
+        Required Transformer Size: {project.transformerSize} KVA
       </Card.Text>
       <Card.Text>
-        Cost of transformer: {project.transformerCost}
+        Cost of transformer: {project.transformerCost} CAD
       </Card.Text>
       <Button size="small" className={classes.buttonDelete} color="secondary" onClick={() => dispatch(deletePost(project._id))}>
           <DeleteIcon fontSize="small" /> Delete
