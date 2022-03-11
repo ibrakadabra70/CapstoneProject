@@ -10,12 +10,19 @@ export const signin = async (req, res) =>
     try {
         const existingUser = await User.findOne({email});
 
-        if(!existingUser) return res.status(404).json({message: "User doesn't exist."});
+        if(!existingUser)
+        {
+            console.log("User doesn't exist.")
+            return res.status(404).json({message: "User doesn't exist."});
+        } 
 
         const isPasswordCorrect = await bcrypt.compare(password, existingUser.password);
 
-        if(!isPasswordCorrect) return res.status(400).json({message: "Invalid Credentials."});
-
+        if(!isPasswordCorrect) 
+        {
+            console.log("Invalid Credentials.")
+            return res.status(400).json({message: "Invalid Credentials."});
+        }
         const token = jwt.sign({email: existingUser.email, id: existingUser._id}, 'test', {expiresIn: "1h"});
 
         res.status(200).json({result: existingUser, token});
@@ -30,10 +37,15 @@ export const signup = async (req, res) =>
 
     try {
         const existingUser = await User.findOne({email});
-        if(existingUser) return res.status(400).json({message: "User already exist."});
-
+        if(existingUser) 
+        {
+            console.log("User already exist.");
+            return res.status(400).json({message: "User already exist."});
+        }
         if(password !== confirmPassword)
         {
+            console.log("passwords do not match");
+            
             return res.status(400).json({message: "Passwords don't match"});
         }
 

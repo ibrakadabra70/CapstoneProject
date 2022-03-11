@@ -72,33 +72,75 @@ const Form = () => {
         let transformerCost = 0;
 
         let projectTransformerSize = 0;
+        let electricValue = 0;
+        if (dropdown === "yes")
+        {
+            electricValue = 3.3;
+        }
 
         function calculateTransformerCost(transformerSize)
         {
             console.log("old transformerSize = ", transformerSize);
             if (dropdown === "no")
             {
+
                 index = transformerSizeArr.indexOf(parseInt(projectTransformerSize))
                 console.log("dropdown = no");
                 for(var i = 0; i <= transformerSizeArr.length; i++)
                 {
                     console.log(transformerSizeArr[i])
-                    if(transformerSizeArr[i] === parseInt(projectTransformerSize) && numberOfHomesArr[i]  >= parseInt(formData.numberOfHomes) )
+                    if(transformerSizeArr[i] === parseInt(projectTransformerSize) && numberOfHomesArr[i]  >= parseInt(formData.numberOfHomes) && squareFootageArr[i] >= parseInt(formData.squareFootagePerHome) )
                     {
-                        transformerSize = transformerSizeArr[i];
+                        console.log("hello0")
+                        formData.transformerSize = transformerSizeArr[i];
                         break;
                     }
-                    else if (transformerSizeArr[i] === parseInt(projectTransformerSize) && numberOfHomesArr[i]  < parseInt(formData.numberOfHomes))
+                    else if (transformerSizeArr[i] === parseInt(projectTransformerSize) && numberOfHomesArr[i]  <=  parseInt(formData.numberOfHomes) && squareFootageArr[i] >= parseInt(formData.squareFootagePerHome) )
                     {
-                        index = transformerSizeCondensed.indexOf(projectTransformerSize) + 1;
-                        transformerSize = transformerSizeCondensed(index);
+                        
+                        index = transformerSizeCondensed.indexOf(projectTransformerSize);
+                        formData.transformerSize = transformerSizeCondensed[index + 1];
+                        transformerSize = formData.transformerSize;
+                        console.log("hello");
+                        console.log(transformerSize);
+                        break;
+                    }
+                    else
+                    {
+                        formData.transformerSize = transformerSize;
+                        
                     }
                 }
             }
-            else if (dropdown === "yes")
+            else if(dropdown === "yes")
             {
-                
+                index = transformerSizeArr.indexOf(parseInt(projectTransformerSize))
+                console.log("dropdown = yes");
+                for(var i = 0; i <= transformerSizeArr.length; i++)
+                {
+                    console.log(transformerSizeArr[i])
+                    if(transformerSizeArr[i] === parseInt(projectTransformerSize) && numberOfHomesArrEV[i]  >= parseInt(formData.numberOfHomes) && squareFootageArr[i] >= parseInt(formData.squareFootagePerHome) )
+                    {
+                        formData.transformerSize = transformerSizeArr[i];
+                        break;
+                    }
+                    else if (transformerSizeArr[i] === parseInt(projectTransformerSize) && numberOfHomesArrEV[i]  <=  parseInt(formData.numberOfHomes) && squareFootageArr[i] >= parseInt(formData.squareFootagePerHome) )
+                    {
+                        
+                        index = transformerSizeCondensed.indexOf(projectTransformerSize);
+                        formData.transformerSize = transformerSizeCondensed[index + 1];
+                        transformerSize = formData.transformerSize;
+                        console.log("hello");
+                        console.log(transformerSize);
+                        break;
+                    }
+                    else
+                    {
+                        continue;
+                    }
+                }
             }
+            
             
             switch (transformerSize) {
                 case 10:
@@ -154,9 +196,15 @@ const Form = () => {
 
 
 
-        if(parseInt(formData.numberOfHomes) > '20')
+        if(parseInt(formData.numberOfHomes) > 10)
         {
-            alert("Maximum number of houses is 20, Please input correct values");
+            alert("Maximum number of houses is 10, Please input correct values");
+            clear();
+            return;
+        }
+        else if(parseInt(formData.squareFootagePerHome) > 3000)
+        {
+            alert("Square Footage per home should be less than 3000");
             clear();
             return;
         }
@@ -169,8 +217,8 @@ const Form = () => {
         else
         {
             if (formData.electricHeating !== '0' && (formData.gasHeating === '0' || formData.gasHeating === '') ) {
-                if (parseInt(formData.squareFootagePerHome) < 1200) {
-                    electricWinter = parseInt(formData.electricHeating) * 15;
+                if (parseInt(formData.squareFootagePerHome) <= 1200) {
+                    electricWinter = parseInt(formData.electricHeating) * (15 + electricValue);
                     zElectric = parseInt(electricWinter) * diversityFactor[parseInt(formData.electricHeating) - 1];
                     indexElectric = zValueWinter.findIndex(function(number) {
                         return number > zElectric;
@@ -179,8 +227,8 @@ const Form = () => {
                     console.log(indexElectric);
                     console.log(projectTransformerSize);
                     console.log(calculateTransformerCost(projectTransformerSize));
-                } else if (1200 <= parseInt(formData.squareFootagePerHome) && parseInt(formData.squareFootagePerHome) < 1500) {
-                    electricWinter = parseInt(formData.electricHeating) * 18;
+                } else if (1200 < parseInt(formData.squareFootagePerHome) && parseInt(formData.squareFootagePerHome) <= 1500) {
+                    electricWinter = parseInt(formData.electricHeating) * (18 + electricValue);
                     zElectric = parseInt(electricWinter) * diversityFactor[parseInt(formData.electricHeating) - 1];
                     indexElectric = zValueWinter.findIndex(function(number) {
                         return number > zElectric;
@@ -189,8 +237,8 @@ const Form = () => {
                     console.log(indexElectric);
                     console.log(projectTransformerSize);
                     console.log(calculateTransformerCost(projectTransformerSize));
-                } else if (1500 <= parseInt(formData.squareFootagePerHome) && parseInt(formData.squareFootagePerHome) < 1800) {
-                    electricWinter = parseInt(formData.electricHeating) * 20;
+                } else if (1500 < parseInt(formData.squareFootagePerHome) && parseInt(formData.squareFootagePerHome) <= 1800) {
+                    electricWinter = parseInt(formData.electricHeating) * (20 + electricValue);
                     zElectric = parseInt(electricWinter) * diversityFactor[parseInt(formData.electricHeating) - 1];
                     indexElectric = zValueWinter.findIndex(function(number) {
                         return number > zElectric;
@@ -200,8 +248,8 @@ const Form = () => {
                     console.log(indexElectric);
                     console.log(projectTransformerSize);
                     console.log(calculateTransformerCost(projectTransformerSize));
-                } else if (1800 <= parseInt(formData.squareFootagePerHome) && parseInt(formData.squareFootagePerHome) < 2400) {
-                    electricWinter = parseInt(formData.electricHeating) * 21;
+                } else if (1800 < parseInt(formData.squareFootagePerHome) && parseInt(formData.squareFootagePerHome) <= 2400) {
+                    electricWinter = parseInt(formData.electricHeating) * (21 + electricValue);
                     zElectric = parseInt(electricWinter) * diversityFactor[parseInt(formData.electricHeating) - 1];
                     indexElectric = zValueWinter.findIndex(function(number) {
                         return number > zElectric;
@@ -210,8 +258,8 @@ const Form = () => {
                     console.log(indexElectric);
                     console.log("transformer Size:" + projectTransformerSize);
                     console.log(calculateTransformerCost(projectTransformerSize));
-                } else if (2400 <= parseInt(formData.squareFootagePerHome) && parseInt(formData.squareFootagePerHome) < 3000) {
-                    electricWinter = parseInt(formData.electricHeating) * 26;
+                } else if (2400 < parseInt(formData.squareFootagePerHome) && parseInt(formData.squareFootagePerHome) <= 3000) {
+                    electricWinter = parseInt(formData.electricHeating) * (26 + electricValue);
                     zElectric = parseInt(electricWinter) * diversityFactor[parseInt(formData.electricHeating) - 1];
                     indexElectric = zValueWinter.findIndex(function(number) {
                         return number > zElectric;
@@ -227,7 +275,7 @@ const Form = () => {
             }
             else if(formData.gasHeating !== "0" && (formData.electricHeating === '0' || formData.electricHeating === ''))
             {
-                if (parseInt(formData.squareFootagePerHome) < 1200) {
+                if (parseInt(formData.squareFootagePerHome) <= 1200) {
                     gasWinter = parseInt(formData.gasHeating) * 8;
                     zGas = parseInt(gasWinter) * diversityFactor[parseInt(formData.gasHeating) - 1];
                     indexGas = zValueWinter.findIndex(function(number) {
@@ -237,7 +285,7 @@ const Form = () => {
                     console.log(indexGas);
                     console.log(projectTransformerSize);
                     console.log(calculateTransformerCost(projectTransformerSize));
-                } else if (1200 <= parseInt(formData.squareFootagePerHome) && parseInt(formData.squareFootagePerHome) < 1500) {
+                } else if (1200 < parseInt(formData.squareFootagePerHome) && parseInt(formData.squareFootagePerHome) <= 1500) {
                     gasWinter = parseInt(formData.gasHeating) * 10;
                     zGas = parseInt(gasWinter) * diversityFactor[parseInt(formData.gasHeating) - 1];
                     indexGas = zValueWinter.findIndex(function(number) {
@@ -247,7 +295,7 @@ const Form = () => {
                     console.log(indexGas);
                     console.log(projectTransformerSize);
                     console.log(calculateTransformerCost(projectTransformerSize));
-                } else if (1500 <= parseInt(formData.squareFootagePerHome) && parseInt(formData.squareFootagePerHome) < 1800) {
+                } else if (1500 < parseInt(formData.squareFootagePerHome) && parseInt(formData.squareFootagePerHome) <= 1800) {
                     gasWinter = parseInt(formData.gasHeating) * 11;
                     zGas = parseInt(gasWinter) * diversityFactor[parseInt(formData.gasHeating) - 1];
                     indexGas = zValueWinter.findIndex(function(number) {
@@ -258,7 +306,7 @@ const Form = () => {
                     console.log(indexGas);
                     console.log(projectTransformerSize);
                     console.log(calculateTransformerCost(projectTransformerSize));
-                } else if (1800 <= parseInt(formData.squareFootagePerHome) && parseInt(formData.squareFootagePerHome) < 2400) {
+                } else if (1800 < parseInt(formData.squareFootagePerHome) && parseInt(formData.squareFootagePerHome) <= 2400) {
                     gasWinter = parseInt(formData.gasHeating) * 12;
                     zGas = parseInt(gasWinter) * diversityFactor[parseInt(formData.gasHeating) - 1];
                     indexGas = zValueWinter.findIndex(function(number) {
@@ -268,7 +316,7 @@ const Form = () => {
                     console.log(indexGas);
                     console.log("transformer Size:" + projectTransformerSize);
                     console.log(calculateTransformerCost(projectTransformerSize));
-                } else if (2400 <= parseInt(formData.squareFootagePerHome) && parseInt(formData.squareFootagePerHome) < 3000) {
+                } else if (2400 < parseInt(formData.squareFootagePerHome) && parseInt(formData.squareFootagePerHome) <= 3000) {
                     gasWinter = parseInt(formData.gasHeating) * 14;
                     zGas = parseInt(gasWinter) * diversityFactor[parseInt(formData.gasHeating) - 1];
                     indexGas = zValueWinter.findIndex(function(number) {
@@ -284,9 +332,9 @@ const Form = () => {
                 }
             }
             else{
-                if (parseInt(formData.squareFootagePerHome) < 1200) {
+                if (parseInt(formData.squareFootagePerHome) <= 1200) {
                     gasWinter = parseInt(formData.gasHeating) * 8;
-                    electricWinter = parseInt(formData.electricHeating) * 15;
+                    electricWinter = parseInt(formData.electricHeating) * (15 + electricValue);
                     zGas = gasWinter *  diversityFactor[parseInt(formData.gasHeating) - 1];
                     zElectric = electricWinter * diversityFactor[parseInt(formData.electricHeating) - 1];
                     sum = zGas + zElectric;
@@ -301,9 +349,9 @@ const Form = () => {
                     console.log(sum);
                     console.log(projectTransformerSize);
                     console.log(calculateTransformerCost(projectTransformerSize));
-                } else if (1200 <= parseInt(formData.squareFootagePerHome) && parseInt(formData.squareFootagePerHome) < 1500) {
+                } else if (1200 < parseInt(formData.squareFootagePerHome) && parseInt(formData.squareFootagePerHome) <= 1500) {
                     gasWinter = parseInt(formData.gasHeating) * 10;
-                    electricWinter = parseInt(formData.electricHeating) * 18;
+                    electricWinter = parseInt(formData.electricHeating) * (18 + electricValue);
                     zGas = gasWinter *  diversityFactor[parseInt(formData.gasHeating) - 1];
                     zElectric = electricWinter * diversityFactor[parseInt(formData.electricHeating) - 1];
                     sum = zGas + zElectric;
@@ -318,9 +366,9 @@ const Form = () => {
                     console.log(sum);
                     console.log(projectTransformerSize);
                     console.log(calculateTransformerCost(projectTransformerSize));
-                } else if (1500 <= parseInt(formData.squareFootagePerHome) && parseInt(formData.squareFootagePerHome) < 1800) {
+                } else if (1500 < parseInt(formData.squareFootagePerHome) && parseInt(formData.squareFootagePerHome) <= 1800) {
                     gasWinter = parseInt(formData.gasHeating) * 11;
-                    electricWinter = parseInt(formData.electricHeating) * 20;
+                    electricWinter = parseInt(formData.electricHeating) * (20 + electricValue); 
                     zGas = gasWinter *  diversityFactor[parseInt(formData.gasHeating) - 1];
                     zElectric = electricWinter * diversityFactor[parseInt(formData.electricHeating) - 1];
                     sum = zGas + zElectric;
@@ -335,9 +383,9 @@ const Form = () => {
                     console.log(sum);
                     console.log(projectTransformerSize);
                     console.log(calculateTransformerCost(projectTransformerSize));
-                } else if (1800 <= parseInt(formData.squareFootagePerHome) && parseInt(formData.squareFootagePerHome) < 2400) {
+                } else if (1800 < parseInt(formData.squareFootagePerHome) && parseInt(formData.squareFootagePerHome) <= 2400) {
                     gasWinter = parseInt(formData.gasHeating) * 12;
-                    electricWinter = parseInt(formData.electricHeating) * 21;
+                    electricWinter = parseInt(formData.electricHeating) * (21 + electricValue);
                     zGas = gasWinter *  diversityFactor[parseInt(formData.gasHeating) - 1];
                     zElectric = electricWinter * diversityFactor[parseInt(formData.electricHeating) - 1];
                     sum = zGas + zElectric;
@@ -352,9 +400,9 @@ const Form = () => {
                     console.log(sum);
                     console.log(projectTransformerSize);
                     console.log(calculateTransformerCost(projectTransformerSize));
-                } else if (2400 <= parseInt(formData.squareFootagePerHome) && parseInt(formData.squareFootagePerHome) < 3000) {
+                } else if (2400 < parseInt(formData.squareFootagePerHome) && parseInt(formData.squareFootagePerHome) <= 3000) {
                     gasWinter = parseInt(formData.gasHeating) * 14;
-                    electricWinter = parseInt(formData.electricHeating) * 26;
+                    electricWinter = parseInt(formData.electricHeating) * (26 + electricValue);
                     zGas = gasWinter *  diversityFactor[parseInt(formData.gasHeating) - 1];
                     zElectric = electricWinter * diversityFactor[parseInt(formData.electricHeating) - 1];
                     sum = zGas + zElectric;
@@ -381,11 +429,11 @@ const Form = () => {
         
        
         
-        formData.transformerSize = projectTransformerSize;
+        //formData.transformerSize = projectTransformerSize;
         formData.transformerCost = transformerCost;
        
         
-         alert("The Transformer size to be used for this project in KW:" + projectTransformerSize);
+         alert("The Transformer size to be used for this project in KW:" + formData.transformerSize);
         
         
 
