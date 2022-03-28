@@ -3,7 +3,7 @@ import axios from "axios";
 
 
 
-const API = axios.create({ baseURL: 'https://capstone-calculator-project.herokuapp.com/posts' });
+const API = axios.create({ baseURL: 'https://capstone-calculator-project.herokuapp.com' });
 
 export const fetchForms = () => API.get('/posts');
 export const sendForm = (newForm) => API.post('/posts', newForm);
