@@ -14,6 +14,10 @@ app.use(cors());
 app.use('/posts', postRoutes);
 app.use('/users', userRoutes);
 
+app.get('/', (req, res) =>{
+    res.send('Capstone Project')
+})
+
 const CONNECTION_URL = "mongodb+srv://Ibrahim_Abdo:Ibrahimabdo70$$@cluster0.elzg6.mongodb.net/test";
 const PORT = process.env.PORT || 5000;
 
