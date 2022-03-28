@@ -25,7 +25,6 @@ const Form = () => {
         electricHeating: '',
         gasHeating: '',
         squareFootagePerHome: '',
-        numberOfEV: '',
         transformerSize: '',
         transformerCost:''
     });
@@ -452,7 +451,6 @@ const Form = () => {
             electricHeating:'',
             gasHeating: '',
             squareFootagePerHome:'',
-            numberOfEV:''
         });
     }
 
@@ -473,7 +471,6 @@ const Form = () => {
                 
                 <TextField name ="SF" variant="outlined" label="Enter the Maximum S.F of home" placeholder="Maximum Square Footage" fullWidth value={formData.squareFootagePerHome} onChange={(e) => setFormData({ ...formData, squareFootagePerHome: e.target.value})} />
                 
-                <TextField name ="Electrical Vehicles" variant="outlined" label="Number of Electrical Vehicles" placeholder="Number of Electrical Vehicles" fullWidth value={formData.numberOfEV} onChange={(e) => setFormData({ ...formData, numberOfEV: e.target.value})} />
                 <div>
                 <h6> Electric Vehicles enabled: {dropdown}</h6>
                 <select value={dropdown} onChange={(e) => setDropdown(e.target.value)}>
