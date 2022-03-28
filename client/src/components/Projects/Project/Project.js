@@ -41,9 +41,6 @@ const Project = ({project}) => {
         Square Footage per home: {project.squareFootagePerHome}
       </Card.Text>
       <Card.Text>
-        Number of electric vehicles: {project.numberOfEV}
-      </Card.Text>
-      <Card.Text>
         Required Transformer Size: {project.transformerSize} KVA
       </Card.Text>
       <Card.Text>
