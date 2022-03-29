@@ -26,7 +26,8 @@ const Form = () => {
         gasHeating: '',
         squareFootagePerHome: '',
         transformerSize: '',
-        transformerCost:''
+        transformerCost:'',
+        totalSavings:''
     });
 
     const [dropdown, setDropdown] = useState("no");
@@ -52,6 +53,7 @@ const Form = () => {
             160,
             267
         ]
+        let transformerCostArr = [1056, 1108, 1425, 1323, 1841, 2282, 3117, 5015, 5200, 5486, 6935, 8200];
         let transformerSizeWinter= [10, 15, 25, 37.5, 50, 75, 100, 167]
         let electricWinter = 0;
         let zElectric = 0;
@@ -68,10 +70,13 @@ const Form = () => {
         let sum = 0;
         
         let index = 0;
+        let indexCondensed = 0;
         let transformerCost = 0;
 
         let projectTransformerSize = 0;
         let electricValue = 0;
+        let totalSavings = 0;
+
         if (dropdown === "yes")
         {
             electricValue = 3.3;
@@ -92,6 +97,7 @@ const Form = () => {
                     {
                         console.log("hello0")
                         formData.transformerSize = transformerSizeArr[i];
+                        transformerSize = formData.transformerSize;
                         break;
                     }
                     else if (transformerSizeArr[i] === parseInt(projectTransformerSize) && numberOfHomesArr[i]  <=  parseInt(formData.numberOfHomes) && squareFootageArr[i] >= parseInt(formData.squareFootagePerHome) )
@@ -114,6 +120,9 @@ const Form = () => {
             else if(dropdown === "yes")
             {
                 index = transformerSizeArr.indexOf(parseInt(projectTransformerSize))
+                indexCondensed = transformerSizeCondensed.indexOf(parseInt(projectTransformerSize)) - 1;
+                let newCost = 0;
+                let oldCost = 0;
                 console.log("dropdown = yes");
                 for(var i = 0; i <= transformerSizeArr.length; i++)
                 {
@@ -121,6 +130,18 @@ const Form = () => {
                     if(transformerSizeArr[i] === parseInt(projectTransformerSize) && numberOfHomesArrEV[i]  >= parseInt(formData.numberOfHomes) && squareFootageArr[i] >= parseInt(formData.squareFootagePerHome) )
                     {
                         formData.transformerSize = transformerSizeArr[i];
+                        transformerSize = formData.transformerSize;
+
+                       if (projectTransformerSize !== transformerSize)
+                       {
+                        newCost = transformerCostArr[indexCondensed];
+                        oldCost = transformerCostArr[indexCondensed - 1];
+
+                        totalSavings = (2 * oldCost) - newCost;
+                        
+                       }
+                       formData.totalSavings = totalSavings;
+
                         break;
                     }
                     else if (transformerSizeArr[i] === parseInt(projectTransformerSize) && numberOfHomesArrEV[i]  <=  parseInt(formData.numberOfHomes) && squareFootageArr[i] >= parseInt(formData.squareFootagePerHome) )
@@ -129,6 +150,16 @@ const Form = () => {
                         index = transformerSizeCondensed.indexOf(projectTransformerSize);
                         formData.transformerSize = transformerSizeCondensed[index + 1];
                         transformerSize = formData.transformerSize;
+
+                        if (projectTransformerSize !== transformerSize)
+                       {
+                        newCost = transformerCostArr[indexCondensed];
+                        oldCost = transformerCostArr[indexCondensed - 1];
+
+                        totalSavings = (2 * oldCost) - newCost;
+                        
+                       }
+                       formData.totalSavings = totalSavings;
                         console.log("hello");
                         console.log(transformerSize);
                         break;

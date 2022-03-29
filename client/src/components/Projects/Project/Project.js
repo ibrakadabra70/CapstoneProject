@@ -46,6 +46,9 @@ const Project = ({project}) => {
       <Card.Text>
         Cost of transformer: {project.transformerCost} CAD
       </Card.Text>
+      <Card.Text>
+        Total Savings: {project.totalSavings} CAD
+      </Card.Text>
       <Button size="small" className={classes.buttonDelete} color="secondary" onClick={() => dispatch(deletePost(project._id))}>
           <DeleteIcon fontSize="small" /> Delete
         </Button>
