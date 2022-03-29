@@ -136,8 +136,9 @@ const Form = () => {
                        {
                         newCost = transformerCostArr[indexCondensed];
                         oldCost = transformerCostArr[indexCondensed - 1];
-
+                        
                         totalSavings = (2 * oldCost) - newCost;
+                        console.log(totalSavings)
                         
                        }
                        formData.totalSavings = totalSavings;
@@ -157,6 +158,7 @@ const Form = () => {
                         oldCost = transformerCostArr[indexCondensed - 1];
 
                         totalSavings = (2 * oldCost) - newCost;
+                        console.log(totalSavings)
                         
                        }
                        formData.totalSavings = totalSavings;
