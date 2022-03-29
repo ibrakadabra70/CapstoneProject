@@ -119,8 +119,10 @@ const Form = () => {
             }
             else if(dropdown === "yes")
             {
-                index = transformerSizeArr.indexOf(parseInt(projectTransformerSize))
-                indexCondensed = transformerSizeCondensed.indexOf(parseInt(projectTransformerSize)) - 1;
+                //index = transformerSizeArr.indexOf(parseInt(projectTransformerSize))
+                //indexCondensed = transformerSizeCondensed.indexOf(parseInt(projectTransformerSize)) - 1;
+                let index = 0;
+                let indexCondensed = 0;
                 let newCost = 0;
                 let oldCost = 0;
                 console.log("dropdown = yes");
@@ -131,7 +133,8 @@ const Form = () => {
                     {
                         formData.transformerSize = transformerSizeArr[i];
                         transformerSize = formData.transformerSize;
-
+                        index = transformerSizeArr.indexOf(parseInt(transformerSize))
+                        indexCondensed = transformerSizeCondensed.indexOf(parseInt(transformerSize)) - 1;
                        /*if (projectTransformerSize !== transformerSize)
                        {*/
                         newCost = transformerCostArr[indexCondensed];
@@ -151,6 +154,8 @@ const Form = () => {
                         index = transformerSizeCondensed.indexOf(projectTransformerSize);
                         formData.transformerSize = transformerSizeCondensed[index + 1];
                         transformerSize = formData.transformerSize;
+                        index = transformerSizeArr.indexOf(parseInt(transformerSize))
+                        indexCondensed = transformerSizeCondensed.indexOf(parseInt(transformerSize)) - 1;
 
                         /*if (projectTransformerSize !== transformerSize)
                        {*/
