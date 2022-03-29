@@ -9,7 +9,6 @@ const postSchema = mongoose.Schema({
     squareFootagePerHome: Number,
     transformerSize: Number,
     transformerCost: Number,
-    totalSavings: Number,
 
 });
 
