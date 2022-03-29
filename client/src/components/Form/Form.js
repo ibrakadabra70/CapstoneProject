@@ -463,6 +463,7 @@ const Form = () => {
         
         //formData.transformerSize = projectTransformerSize;
         formData.transformerCost = transformerCost;
+        formData.totalSavings = totalSavings;
        
         
          alert("The Transformer size to be used for this project in KW:" + formData.transformerSize);

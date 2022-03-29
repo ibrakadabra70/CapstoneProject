@@ -8,7 +8,8 @@ const postSchema = mongoose.Schema({
     gasHeating: Number,
     squareFootagePerHome: Number,
     transformerSize: Number,
-    transformerCost: Number
+    transformerCost: Number,
+    totalSavings: Number,
 
 });
 
