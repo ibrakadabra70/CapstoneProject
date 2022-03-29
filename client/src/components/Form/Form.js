@@ -132,15 +132,15 @@ const Form = () => {
                         formData.transformerSize = transformerSizeArr[i];
                         transformerSize = formData.transformerSize;
 
-                       if (projectTransformerSize !== transformerSize)
-                       {
+                       /*if (projectTransformerSize !== transformerSize)
+                       {*/
                         newCost = transformerCostArr[indexCondensed];
                         oldCost = transformerCostArr[indexCondensed - 1];
                         
                         totalSavings = (2 * oldCost) - newCost;
                         console.log(totalSavings)
                         
-                       }
+                       /*}*/
                        formData.totalSavings = totalSavings;
 
                         break;
@@ -152,15 +152,15 @@ const Form = () => {
                         formData.transformerSize = transformerSizeCondensed[index + 1];
                         transformerSize = formData.transformerSize;
 
-                        if (projectTransformerSize !== transformerSize)
-                       {
+                        /*if (projectTransformerSize !== transformerSize)
+                       {*/
                         newCost = transformerCostArr[indexCondensed];
                         oldCost = transformerCostArr[indexCondensed - 1];
 
                         totalSavings = (2 * oldCost) - newCost;
                         console.log(totalSavings)
                         
-                       }
+                       /*}*/
                        formData.totalSavings = totalSavings;
                         console.log("hello");
                         console.log(transformerSize);
